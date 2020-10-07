@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertController } from "@ionic/angular";
 import { ReceipiesServiceService } from "../receipies-service.service";
 import { Receipie } from "../receipies.model";
 
@@ -14,12 +15,14 @@ export class ReceipiePage implements OnInit {
   constructor(
     private rcpService: ReceipiesServiceService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((param) => {
       if (!param.has("receipieId")) {
+        this.router.navigate(["/receipies"]);
         return;
       }
       this.id = param.get("receipieId");
@@ -28,7 +31,24 @@ export class ReceipiePage implements OnInit {
   }
 
   deleteReceipie(id: string) {
-    this.rcpService.deleteReceipie(id);
-    this.router.navigate(["/receipies"]);
+    this.alertCtrl.create({
+      header: "Are you sure",
+      message: "Do you really want to delete the receipie?",
+      buttons: [
+        {
+          text: "cancel",
+          role: "cancel",
+        },
+        {
+          text: "delete",
+          handler: () => {
+            this.rcpService.deleteReceipie(id);
+            this.router.navigate(["/receipies"]);
+          },
+        },
+      ],
+    }).then(alertEl => {
+      alertEl.present()
+    });
   }
 }
