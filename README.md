@@ -3,4 +3,4 @@ Demo Ionic Project
 
 ## Getting Started
 - install ionic
-- type ionic-serve
+- type ionic serve
