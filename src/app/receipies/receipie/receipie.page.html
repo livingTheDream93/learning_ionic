@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-button slot="start" fill="outline">
+      <ion-back-button
+        defaulttHref="/receipies"
+        color="light" 
+      ></ion-back-button>
+    </ion-button>
+    <ion-title>{{ receipie.title }}</ion-title>
+    <ion-button slot="primary" fill="outline" (click)="deleteReceipie(receipie.id)"
+      ><ion-icon name="trash" slot="icon-only" color="light"></ion-icon
+    ></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img [src]="receipie.imageUrl"></ion-img>
+  <h1 class="ion-text-center">{{receipie.title}}</h1>
+  <ion-row>
+    <ion-col sm-12 no-padding>
+      <ion-list>
+        <ion-item *ngFor="let i of receipie.ing"> {{i}} </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>
